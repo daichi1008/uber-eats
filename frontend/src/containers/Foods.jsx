@@ -10,7 +10,6 @@ import {
   initialState as foodsInitialState,
   foodsActionTyps,
   foodsReducer,
-  initialState,
 } from "../reducers/foods";
 
 import { fetchFoods } from "../apis/foods";
@@ -48,6 +47,10 @@ const FoodsList = styled.div`
 const ItemWrapper = styled.div`
   margin: 16px;
 `;
+
+const submitOrder = () => {
+  console.log("登録ボタンが押された!");
+};
 
 export const Foods = ({ match }) => {
   const [foodsState, dispatch] = useReducer(foodsReducer, foodsInitialState);
@@ -101,7 +104,7 @@ export const Foods = ({ match }) => {
                   setState({
                     ...state,
                     isOpenOrderDialog: true,
-                    selectFood: food,
+                    selectedFood: food,
                   })
                 }
                 imageUrl={FoodImage}
@@ -112,12 +115,28 @@ export const Foods = ({ match }) => {
       </FoodsList>
       {state.isOpenOrderDialog && (
         <FoodOrderDialog
-          food={state.selectedFood}
           isOpen={state.isOpenOrderDialog}
+          food={state.selectedFood}
+          countNumber={state.selectedFoodCount}
+          onClickCountUp={() =>
+            setState({
+              ...state,
+              selectedFoodCount: state.selectedFoodCount + 1,
+            })
+          }
+          onClickCountDown={() =>
+            setState({
+              ...state,
+              selectedFoodCount: state.selectedFoodCount - 1,
+            })
+          }
+          onClickOrder={() => submitOrder()}
           onClose={() =>
             setState({
               ...state,
               isOpenOrderDialog: false,
+              selectedFood: null,
+              selectedFoodCount: 1,
             })
           }
         />
