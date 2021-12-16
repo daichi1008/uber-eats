@@ -60,7 +60,6 @@ export const FoodOrderDialog = ({
   onClickCountDown,
   onClickOrder,
 }) => {
-  console.log(food);
   return (
     <Dialog open={isOpen} onClose={onClose}>
       <OrderHeader src={OrderHeaderImage} alt="order header" />
